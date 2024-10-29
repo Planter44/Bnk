@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Music Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .upload-form, .music-list {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .upload-form input[type="file"] {
+            margin-bottom: 10px;
+        }
+        .music-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .music-item:last-child {
+            border-bottom: none;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #cc3700;
+        }
+        .music-icon {
+            width: 50px; /* Set a size for the icon */
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin - Music Management</h2>
+
+        <!-- Upload Music Section -->
+        <div class="upload-form">
+            <h3>Upload New Music</h3>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="iconFile" name="iconFile" accept="image/*" required>
+                <input type="file" id="musicFile" name="musicFile" accept=".mp3,.mp4" required>
+                <button type="submit">Upload</button>
+            </form>
+            <p id="uploadStatus"></p>
+        </div>
+
+        <!-- Music List Section -->
+        <div class="music-list">
+            <h3>Uploaded Music</h3>
+            <div id="musicContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Display uploaded files
+        function loadMusicList() {
+    fetch('/api/music')
+        .then(response => response.json())
+        .then(musicList => {
+            const container = document.getElementById('musicContainer');
+            container.innerHTML = '';
+
+            musicList.forEach(music => {
+                console.log("Icon URL:", music.iconUrl); // Check if the URL is correct
+                const iconUrl = music.iconUrl || '/path/to/default-placeholder.png';
+
+                const musicDiv = document.createElement('div');
+                musicDiv.classList.add('music-item');
+                musicDiv.innerHTML = `
+                    <img src="${iconUrl}" alt="${music.name} icon" class="music-icon"
+                        onerror="this.onerror=null; this.src='/path/to/default-placeholder.png';">
+                    <span>${music.name}</span>
+                    <audio controls src="${music.url}" style="margin-right: 10px;"></audio>
+                    <button onclick="deleteMusic('${music.id}')">Delete</button>
+                `;
+                container.appendChild(musicDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching music list:', error);
+        });
+}
+
+
+        // Handle file upload
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData();
+            const iconFile = document.getElementById('iconFile').files[0];
+            const musicFile = document.getElementById('musicFile').files[0];
+
+            formData.append('iconFile', iconFile);
+            formData.append('musicFile', musicFile);
+
+            fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('uploadStatus').innerText = data.message;
+                loadMusicList();
+            })
+            .catch(error => {
+                document.getElementById('uploadStatus').innerText = 'Error uploading file';
+                console.error('Error:', error);
+            });
+        });
+
+        // Delete music file
+        function deleteMusic(musicId) {
+            fetch(`/api/delete/${musicId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    loadMusicList();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Load music list on page load
+        loadMusicList();
+    </script>
+</body>
+</html>

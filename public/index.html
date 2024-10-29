@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BONKE</title>
+
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Dancing+Script&family=Lobster&family=Amatic+SC&family=Satisfy&family=Vampiro+One&display=swap" rel="stylesheet">
+    
+    <!-- Inline CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #e7e7e7;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        header {
+            background-color: #222;
+            color: white;
+            padding: 1px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease; /* Added transition for smooth effect */
+        }
+
+        /* Color for BONKE */
+        header h1 {
+            display: inline-block;
+            margin-left: 20px;
+            font-family: 'Satisfy', cursive;
+            font-size: 3rem; 
+            letter-spacing: 4px; 
+            cursor: pointer; /* Add cursor for clickable effect */
+            color: white; /* Change BONKE text color to orange */
+        }
+
+
+
+
+        /* Updated navigation styles */
+        nav ul {
+            list-style: none;
+            float: right;
+            margin-right: 20px;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            transition: color 0.3s ease; /* Smooth transition for hover */
+        }
+
+        /* Hover effect for navigation links */
+        nav ul li a:hover {
+            color: #ff4500;
+        }
+
+        /* Make the navigation responsive and ensure the tabs stay aligned */
+        @media (max-width: 768px) {
+            nav ul {
+                display: flex; /* Use flexbox for layout */
+                justify-content: flex-start; /* Align links to the start (left) */
+                flex-wrap: nowrap; /* Prevent wrapping, keep items in one line */
+                padding: 0; /* Remove padding */
+                margin: 0; /* Remove margin from the ul */
+                margin-right: 0%;
+                margin-bottom: 15px; /* Increase bottom margin for the nav */
+            }
+
+            nav ul li {
+                margin-left: auto; /* Reduce margin between items */
+            }
+
+            nav ul li a {
+                padding: 12px; /* Increase padding for larger clickable area */
+                font-size: 0.87rem; /* Increase font size for better visibility */
+            }
+        }
+
+
+
+        #about, #music, #gallery, #musicContainer, #events, #contact {
+            background-color: white; /* White background for sections */
+            border-radius: 10px; /* Rounded corners */
+            padding: 2em; /* Padding for spacing */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            margin-bottom: 20px; /* Space between sections */
+        }
+
+            #about .padded-text {
+            padding: 0 15px; /* Adds space to the left and right */
+            text-align: left; /* Align text to the left */
+            line-height: 1.6; /* Improves readability */
+            margin-bottom: 1em; /* Adds space between paragraphs */
+        }
+
+        #about {
+            margin-top: 20px;
+        }
+
+        /* Style for Gallery Section */
+        #gallery {
+            background-color: #c6dbf0; /* White background for clean look */
+            color: #333;
+            padding: 2em;
+        }
+
+        .slider {
+            position: relative;
+            max-width: 600px; /* Adjust as needed */
+            margin: auto;
+            overflow: hidden; /* Hide overflow */
+        }
+
+        .slide {
+            display: none; /* Hide all slides by default */
+            width: 100%; /* Full width */
+        }
+
+        .slide img {
+            width: 80%; /* Reduced image size */
+            max-width: 400px; /* Set a max-width if desired */
+            border-radius: 10px; /* Match the gallery style */
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Ensure section titles are not covered by the header */
+        section {
+            padding-top: 100px; /* Adds enough space to clear the fixed header */
+        }
+
+                #hero {
+            position: relative;
+            height: 85vh; /* Height of the hero section */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-top: 5%;
+            background: url('c2.JPG') no-repeat center 10%; /* Center horizontally and move down */
+            background-size: 100% auto; /* Stretch the width to 100% while keeping the height proportional */
+            z-index: 1;
+        }
+
+        /* Color for "New Single Out Now!" */
+        #hero h2 {
+            font-size: 3rem;
+            color: #ffffff; /* Change New Single Out Now! text color to green */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(255, 255, 255, 0.8); /* Added white shadow */
+        }
+
+        #hero h2, #hero button {
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            #hero h2 {
+                font-size: 3rem; /* Keep the font size the same */
+                color: #ffffff; /* Change New Single Out Now! text color to white */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(255, 255, 255, 0.8); /* Added white shadow */
+                position: absolute; /* Ensure it can be moved */
+                bottom: 60px; /* Move the heading down further */
+            }
+
+            #hero button {
+                position: absolute; /* Ensure it can be moved */
+                z-index: 2;
+                bottom: 45px; /* Move the button down further */
+            }
+        }
+
+        #hero::before {
+            content: ""; 
+            display: block;
+            height: 100%;
+            background: url('bnk.png') no-repeat center / contain;
+            position: absolute;
+            top: 0;
+            left: 25%;
+            right: 0;
+            margin-top: 0%;
+            z-index: 0;
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 768px) {
+            #hero {
+                height: auto; /* Allow auto height for small screens */
+            }
+
+            #hero::before {
+                background-size: 100% auto; /* Stretch the bnk image to fit the width */
+                background: url('bw1.png') no-repeat center / contain; /* Change to image2 on small screens */
+                top: auto; /* Remove the top positioning */
+                bottom: 0; /* Align it to the bottom */
+                left: 0;
+                height: 70vh;
+                right: 0;
+            }
+
+            /* Adjust the position of c2 image to align with bnk */
+            #hero {
+                background-position: center bottom; /* Align c2 to the bottom */
+                height: 70vh; /* Allow auto height for small screens */
+                background-size: 100% 150%; /* Increase height to stretch downwards */
+            }
+        }
+
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #about, #music, #gallery, #events, #contact {
+            padding: 4em 0;
+            text-align: center;
+        }
+
+        .music-grid iframe, .gallery-grid img {
+            margin: 20px;
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            #music .music-grid iframe {
+                width: 90%; /* Make the iframe responsive */
+                height: auto; /* Maintain aspect ratio */
+            }
+
+            #about, #music, #gallery, #events, #contact {
+                padding: 2em 1em; /* Adjust padding for mobile */
+            }
+
+            footer {
+                padding: 1em 0;
+                font-size: 0.9rem; /* Smaller footer text */
+            }
+        }
+
+
+        /* Downloads Section Styling */
+
+        .music-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .music-item:last-child {
+            border-bottom: none; /* Keep the last item without border */
+        }
+
+        .music-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .music-details {
+            flex-grow: 1;
+        }
+
+        .download-btn {
+            padding: 5px 10px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background-color: #cc3700;
+        }
+
+
+        
+
+
+        /* General styling */
+       /* General styling */
+       /* General styling */
+        #contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Add gap between form elements */
+            align-items: center; /* Center all form elements horizontally */
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center; /* Center label and input vertically */
+            gap: 10px; /* Space between label and input box */
+            width: 100%; /* Make the group take full width */
+            max-width: 400px; /* Set a max-width for the input fields */
+        }
+
+        #contact form label {
+            flex: 0 0 60px; /* Fixed width for labels */
+            margin: 0; /* Remove default margin */
+        }
+
+        #contact form input,
+        #contact form textarea {
+            flex: 1; /* Allow input fields to grow */
+            max-width: 100%;
+            box-sizing: border-box; /* Include padding in width */
+            padding: 8px; /* Adjust padding for smaller input size */
+            font-size: 14px; /* Reduce font size for smaller boxes */
+        }
+
+        #contact form textarea {
+            height: 80px; /* Set a smaller height for the textarea */
+        }
+
+        /* Style for the Send button */
+        #contact form button {
+            padding: 11px 19px; /* Adjust padding for the button */
+            font-size: 14px; /* Reduce font size for the button */
+            border-radius: 10px;
+            align-self: center; /* Center the button */
+        }
+
+
+
+        @media (max-width: 768px) {
+            #contact form label,
+            #contact form input,
+            #contact form textarea,
+            #contact form button {
+                margin-bottom: 10px; /* Add space below each element on small screens */
+            }
+        }
+
+        #other-music-button {
+            border: none; /* Remove default border */
+            background-color: #ff4500; /* Set a background color */
+            color: white; /* Set text color */
+            padding: 10px 20px; /* Add padding */
+            border-radius: 8px; /* Add border radius */
+            cursor: pointer; /* Change cursor to pointer */
+            transition: background-color 0.3s; /* Smooth transition for hover */
+        }
+
+        #other-music-button:hover {
+            background-color: #842607; /* Darker color on hover */
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        footer p, .socials a {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1 id="home">BONKE M</h1> <!-- BONKE acts as home button -->
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#music">Music</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h2>New Single Out!</h2>
+            <button>Listen Now</button>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <h2>About</h2>
+        <p class="padded-text">
+            Bonke M is a passionate gospel singer whose music blends traditional gospel with modern sounds, creating a unique and soulful experience. Raised in a spiritually rich environment, he discovered his calling in music through church choirs, where he developed a deep desire to spread God’s word through song.
+        </p>
+        <p class="padded-text">
+            With a powerful voice and heartfelt lyrics, Bonke M’s music reflects themes of faith, hope, and redemption. His performances are known for their emotional depth and ability to create an atmosphere of worship that resonates with audiences. Through his songs, Bonke offers a message of encouragement, inspiring others to connect with their faith and find strength in God.
+        </p>
+        <p class="padded-text">
+            Having released several singles and performed across various venues, Bonke continues to touch lives through his ministry, using music as a tool for healing and spiritual growth.
+        </p>
+    </section>
+
+
+    <section id="music" class="container">
+        <h2>Music</h2>
+        <div class="music-grid">
+            <iframe 
+                id="music-iframe" 
+                src="https://www.youtube.com/embed/SyLrkN1iKes" 
+                width="300" 
+                height="380" 
+                frameborder="0" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        <button id="other-music-button">Other Music</button>
+    </section>
+    
+    
+
+    <section id="gallery" class="container">
+        <h2>Gallery</h2>
+        <div class="slider">
+            <div class="slide fade">
+                <img src="bonk/IMG_1.jpg" alt="Image 1">
+            </div>
+            <div class="slide fade">
+                <img src="bonk/IMG_2.jpg" alt="Image 2">
+            </div>
+            <div class="slide fade">
+                <img src="bonk/IMG_3.jpg" alt="Image 3">
+            </div>
+            <div class="slide fade">
+                <img src="bonk/IMG_4.jpg" alt="Image 4">
+            </div>
+            <div class="slide fade">
+                <img src="bonk/IMG_5.jpg" alt="Image 5">
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <h2>Available Music for Download</h2>
+        <div class="music-list" id="musicContainer"></div> <!-- Same ID as in admin.html -->
+    </div>  
+
+    <section id="events" class="container">
+        <h2>Events</h2>
+        <p>Stay tuned for upcoming events!</p>
+    </section>
+
+    <section id="contact" class="container">
+        <h2>Contact</h2>
+        <form action="mailto:ruachkol@gmail.com" method="post" enctype="text/plain">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required> <!-- Added required -->
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required> <!-- Added required -->
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea> <!-- Added required -->
+            </div>
+            <button type="submit">Send</button>
+        </form>
+        <p>For inquiries, reach us at <a href="mailto:bonke@example.com">ruachkol@gmail.com</a>.</p>
+    </section>
+    
+    
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Bonke. All Rights Reserved.</p>
+            <div class="socials">
+                <a href="#">Facebook</a> |
+                <a href="#">WhatsApp</a> |
+                <a href="#">TikTok</a> |
+                <a href="#">Instagram</a> |
+                <a href="#">X</a> | all @ Bonke M
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Slider functionality
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            if (n > slides.length) {slideIndex = 1} 
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slides[slideIndex-1].style.display = "block";  
+        }
+
+        // Make "BONKE" a home button
+        document.getElementById('home').addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Listen Now button scrolls to Music section
+        document.querySelector('button').addEventListener('click', function () {
+            window.location.href = '#music';
+        });
+
+        // Automatically change slides every 5 seconds
+        setInterval(() => {
+            plusSlides(1);
+        }, 5000);
+
+        document.getElementById("other-music-button").addEventListener("click", function() {
+    window.location.href = "https://www.youtube.com/@Bonke-t4d"; // Redirect to your YouTube channel
+    });
+
+    fetch('/api/music')
+    .then(response => response.json())
+    .then(musicList => {
+        const container = document.getElementById('musicContainer');
+        musicList.forEach(music => {
+            const musicDiv = document.createElement('div');
+            musicDiv.innerHTML = `
+                <span>${music.name}</span>
+                <audio controls src="${music.url}" style="margin-right: 10px;"></audio>
+            `;
+            container.appendChild(musicDiv);
+        });
+    });
+
+    // Fetch and display the list of uploaded files
+// Fetch and display music list
+function loadMusicList() {
+            fetch('/api/music')
+                .then(response => response.json())
+                .then(musicList => {
+                    const container = document.getElementById('musicContainer'); // Matches ID from admin.html
+                    container.innerHTML = ''; // Clear previous list
+
+                    musicList.forEach(music => {
+                        const musicDiv = document.createElement('div');
+                        musicDiv.classList.add('music-item');
+                        musicDiv.innerHTML = `
+                            <img src="${music.iconUrl}" alt="${music.name} icon" class="music-icon"> <!-- Consistent icon styling -->
+                            <div class="music-details">
+                                <span>${music.name}</span>
+                            </div>
+                            <a href="${music.url}" download="${music.name}" class="download-btn">Download</a> <!-- Matching button styling -->
+                        `;
+                        container.appendChild(musicDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching music list:', error);
+                });
+        }
+
+        // Load music list on page load
+        loadMusicList();
+
+// Call fetchMusicFiles when the page loads
+window.onload = fetchMusicFiles;
+
+
+    </script>
+</body>
+</html>
