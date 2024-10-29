@@ -3,15 +3,26 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Planter planter",
+  "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.21.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "package-name": "^0.1.0",
+    "package1": "^0.0.0",
+    "package2": "^1.0.0"
   },
-  "devDependencies": {},
-  "description": ""
+  "description": "music apk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Planter44/Bnk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Planter44/Bnk/issues"
+  },
+  "homepage": "https://github.com/Planter44/Bnk#readme"
 }
